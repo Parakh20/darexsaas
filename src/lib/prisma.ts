@@ -16,7 +16,7 @@ export function tenantPrisma(user: SessionUser) {
         async findMany({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
         async findFirst({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
         async findUnique({ args }) { return prisma.contact.findFirst({ ...args, where: { ...args.where, tenantId: user.tenantId } }); },
-        async create({ args, query }) { args.data = { ...args.data, tenantId: user.tenantId }; return query(args); },
+        async create({ args, query }) { (args.data as Record<string, unknown>)["tenantId"] = user.tenantId; return query(args); },
         async update({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId } as typeof args.where; return query(args); },
         async delete({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId } as typeof args.where; return query(args); },
         async count({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
@@ -24,35 +24,35 @@ export function tenantPrisma(user: SessionUser) {
       opportunity: {
         async findMany({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
         async findFirst({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
-        async create({ args, query }) { args.data = { ...args.data, tenantId: user.tenantId }; return query(args); },
+        async create({ args, query }) { (args.data as Record<string, unknown>)["tenantId"] = user.tenantId; return query(args); },
         async update({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId } as typeof args.where; return query(args); },
         async count({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
       },
       conversation: {
         async findMany({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
         async findFirst({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
-        async create({ args, query }) { args.data = { ...args.data, tenantId: user.tenantId }; return query(args); },
+        async create({ args, query }) { (args.data as Record<string, unknown>)["tenantId"] = user.tenantId; return query(args); },
         async count({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
       },
       chatConversation: {
         async findMany({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
         async findFirst({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
-        async create({ args, query }) { args.data = { ...args.data, tenantId: user.tenantId }; return query(args); },
+        async create({ args, query }) { (args.data as Record<string, unknown>)["tenantId"] = user.tenantId; return query(args); },
       },
       task: {
         async findMany({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
         async findFirst({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
-        async create({ args, query }) { args.data = { ...args.data, tenantId: user.tenantId }; return query(args); },
+        async create({ args, query }) { (args.data as Record<string, unknown>)["tenantId"] = user.tenantId; return query(args); },
         async update({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId } as typeof args.where; return query(args); },
         async count({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
       },
       auditLog: {
         async findMany({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
-        async create({ args, query }) { args.data = { ...args.data, tenantId: user.tenantId }; return query(args); },
+        async create({ args, query }) { (args.data as Record<string, unknown>)["tenantId"] = user.tenantId; return query(args); },
       },
       workflowRun: {
         async findMany({ args, query }) { args.where = { ...args.where, tenantId: user.tenantId }; return query(args); },
-        async create({ args, query }) { args.data = { ...args.data, tenantId: user.tenantId }; return query(args); },
+        async create({ args, query }) { (args.data as Record<string, unknown>)["tenantId"] = user.tenantId; return query(args); },
       },
     },
   });
@@ -62,5 +62,5 @@ export async function createAuditLog(params: {
   tenantId: string; userId?: string; action: string; entityType?: string;
   entityId?: string; details?: Record<string, unknown>; aiInitiated?: boolean; ipAddress?: string;
 }) {
-  return prisma.auditLog.create({ data: params });
+  return prisma.auditLog.create({ data: params as unknown as import("@prisma/client").Prisma.AuditLogUncheckedCreateInput });
 }

@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
   if (!contact) return NextResponse.json(err("Contact not found"), { status: 404 });
 
   const run = await prisma.workflowRun.create({
-    data: { tenantId: user.tenantId, workflowKey: "new-lead-qualification", entityId: contactId, entityType: "Contact", status: "RUNNING", steps: [] },
+    data: { tenantId: user.tenantId, workflowKey: "new-lead-qualification", entityId: contactId, entityType: "Contact", status: "RUNNING", steps: [] as unknown as import("@prisma/client").Prisma.InputJsonValue },
   });
 
   const steps: unknown[] = [];
@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
       steps.push({ step: "create-task", result: taskResult });
     }
 
-    await prisma.workflowRun.update({ where: { id: run.id }, data: { status: "COMPLETED", steps: steps, completedAt: new Date(), result: { score, qualified: score >= 80 } } });
+    await prisma.workflowRun.update({ where: { id: run.id }, data: { status: "COMPLETED", steps: steps as unknown as import("@prisma/client").Prisma.InputJsonValue, completedAt: new Date(), result: { score, qualified: score >= 80 } } });
     await createAuditLog({ tenantId: user.tenantId, userId: user.id, action: "workflow.new-lead-qualification", entityType: "Contact", entityId: contactId, details: { score, steps }, aiInitiated: true });
 
     return NextResponse.json(ok({ workflowRunId: run.id, score, qualified: score >= 80, steps }));

@@ -15,7 +15,7 @@ function toGeminiTools() {
   return ALL_TOOLS.map((t) => ({
     name: t.name,
     description: t.description,
-    parameters: t.parameters as Record<string, unknown>,
+    parameters: t.parameters as unknown as import("@google/generative-ai").FunctionDeclarationSchema,
   }));
 }
 
@@ -79,7 +79,7 @@ export async function* streamChat(
         continue;
       }
       try {
-        const toolResult = await tool.execute(call.args as Record<string, unknown>, context);
+        const toolResult = await (tool.execute as (args: unknown, ctx: ToolContext) => Promise<unknown>)(call.args, context);
         toolCallLog.push({ tool: call.name, args: call.args, result: toolResult });
         toolResults.push({ name: call.name, response: { result: JSON.stringify(toolResult) } });
         const toolResultText = `\n[Tool: ${call.name}] → ${JSON.stringify(toolResult, null, 2)}\n`;
@@ -111,7 +111,7 @@ export async function* streamChat(
       chatConversationId: conversationId,
       role: "ASSISTANT",
       content: fullResponse,
-      toolCalls: toolCallLog.length > 0 ? toolCallLog : undefined,
+      toolCalls: toolCallLog.length > 0 ? toolCallLog as unknown as import("@prisma/client").Prisma.InputJsonValue : undefined,
     },
   });
 }
