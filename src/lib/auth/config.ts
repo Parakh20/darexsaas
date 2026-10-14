@@ -1,14 +1,12 @@
 import type { NextAuthConfig } from "next-auth";
-import Google from "next-auth/providers/google";
 import { prisma } from "@/lib/prisma";
+import { edgeAuthConfig } from "./edge-config";
 import { slugify } from "@/lib/utils";
 
 export const authConfig: NextAuthConfig = {
-  providers: [
-    Google({ clientId: process.env.GOOGLE_CLIENT_ID!, clientSecret: process.env.GOOGLE_CLIENT_SECRET! }),
-  ],
-  pages: { signIn: "/auth/signin", error: "/auth/error" },
+  ...edgeAuthConfig,
   callbacks: {
+    ...edgeAuthConfig.callbacks,
     async signIn({ user, account }) {
       if (!user.email || account?.provider !== "google") return false;
       try {
@@ -38,12 +36,5 @@ export const authConfig: NextAuthConfig = {
       }
       return session;
     },
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const isPublic = nextUrl.pathname.startsWith("/auth") || nextUrl.pathname.startsWith("/api/auth") || nextUrl.pathname.startsWith("/api/webhooks") || nextUrl.pathname === "/";
-      if (isPublic) return true;
-      return isLoggedIn;
-    },
   },
-  session: { strategy: "jwt" },
 };
