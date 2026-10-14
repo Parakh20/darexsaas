@@ -18,7 +18,7 @@ user's behalf.
   their own tenant and the `OWNER` role (roles: `OWNER`, `ADMIN`, `MEMBER`).
 - **Dashboard** with KPIs: active opportunities, pipeline value, pending tasks, recent contacts
   and recent AI-initiated actions from the audit log.
-- **Contacts** (`/crm`): paginated search and create in the UI; the API also supports update
+- **Contacts** (`/crm`): search and create in the UI; the API also supports pagination, update
   and delete. Contacts have status, tags, source, lead score and notes.
 - **Pipeline** (`/opportunities`): deals across `LEAD → QUALIFIED → PROPOSAL → NEGOTIATION →
   CLOSED_WON / CLOSED_LOST`, with value, probability and expected close date.
