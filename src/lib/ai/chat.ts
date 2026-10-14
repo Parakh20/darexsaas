@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI, FunctionCallingMode } from "@google/generative-ai";
 import { ALL_TOOLS } from "./tools";
+import { GEMINI_MODEL } from "./config";
 import type { ToolContext } from "./tools/types";
 import { prisma } from "@/lib/prisma";
 
@@ -25,7 +26,7 @@ export async function* streamChat(
   context: ToolContext
 ): AsyncGenerator<string> {
   const model = genai.getGenerativeModel({
-    model: "gemini-1.5-flash",
+    model: GEMINI_MODEL,
     systemInstruction: SYSTEM_PROMPT,
     tools: [{ functionDeclarations: toGeminiTools() }],
     toolConfig: { functionCallingConfig: { mode: FunctionCallingMode.AUTO } },

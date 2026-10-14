@@ -6,11 +6,12 @@ import { ok, err } from "@/lib/utils";
 import { createTaskTool } from "@/lib/ai/tools/createTask";
 import { sendWhatsAppTool } from "@/lib/ai/tools/sendWhatsApp";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GEMINI_MODEL } from "@/lib/ai/config";
 
 const genai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY ?? "");
 
 async function qualifyLead(contactName: string, company: string, notes: string): Promise<{ score: number; reasoning: string }> {
-  const model = genai.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const model = genai.getGenerativeModel({ model: GEMINI_MODEL });
   const prompt = `You are a B2B lead qualification AI. Score this lead from 0-100.
 Name: ${contactName}
 Company: ${company}
