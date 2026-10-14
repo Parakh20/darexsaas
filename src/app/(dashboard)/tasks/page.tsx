@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Plus, CheckCircle2, Circle, Bot } from "lucide-react";
+import { CheckCircle2, Circle, Bot } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Task {

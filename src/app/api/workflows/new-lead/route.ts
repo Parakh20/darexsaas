@@ -3,7 +3,6 @@ import { requireSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 import { createAuditLog } from "@/lib/prisma";
 import { ok, err } from "@/lib/utils";
-import { searchContactsTool } from "@/lib/ai/tools/searchContacts";
 import { createTaskTool } from "@/lib/ai/tools/createTask";
 import { sendWhatsAppTool } from "@/lib/ai/tools/sendWhatsApp";
 import { GoogleGenerativeAI } from "@google/generative-ai";

@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { requireSession } from "@/lib/auth/session";
 import { tenantPrisma } from "@/lib/prisma";
 import { ok } from "@/lib/utils";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const user = await requireSession();
   const tp = tenantPrisma(user);
 

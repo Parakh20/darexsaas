@@ -107,7 +107,7 @@ export default function ChatPage() {
             <div className="text-center">
               <Bot size={48} className="text-violet-400 mx-auto mb-4" />
               <h2 className="text-xl font-semibold text-white">AI Business Agent</h2>
-              <p className="text-neutral-400 mt-2 text-sm">Start a conversation or try: "Follow up with Rahul tomorrow"</p>
+              <p className="text-neutral-400 mt-2 text-sm">Start a conversation or try: &quot;Follow up with Rahul tomorrow&quot;</p>
               <button onClick={() => createConvMutation.mutate()} className="mt-4 bg-violet-600 hover:bg-violet-700 text-white rounded-lg px-4 py-2 text-sm font-medium transition-colors">
                 Start Chat
               </button>

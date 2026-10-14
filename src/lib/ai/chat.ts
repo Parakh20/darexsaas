@@ -54,7 +54,7 @@ export async function* streamChat(
 
   let result = await chat.sendMessageStream(userMessage);
   let fullResponse = "";
-  let toolCallLog: unknown[] = [];
+  const toolCallLog: unknown[] = [];
 
   for await (const chunk of result.stream) {
     const text = chunk.text();
